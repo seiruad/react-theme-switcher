@@ -1,0 +1,137 @@
+$themes: (
+  gamma: (
+    page-background: #dfcdb5,
+    page-font: #231e15,
+    bottom-background: #f5a141,
+    bottom-font: #edf5e1,
+    nav-background: #e7891a,
+    navitem-font: #edf5e1 ,
+    navitem-background: #f8a445,
+  ),
+  beta: (
+    page-background: #696969,
+    page-font: #d1d1b2,
+    bottom-background: #505050,
+    bottom-font: #d1d1b2,
+    nav-background: #242323,
+    navitem-font: #d1d1b2,
+    navitem-background: #535151
+  ),
+  alpha: (
+    page-background: #f5f5f5,
+    page-font: #222,
+    bottom-background: #d4d4d4,
+    bottom-font: #222,
+    nav-background: #41b3a3,
+    navitem-font: #c38d9e,
+    navitem-background: #edf5e1,
+  ),
+);
+
+
+/**
+ * theme-aware - Change color of a css property based on the currently active theme
+ *
+ * @param  {key}     CSS property
+ * @param  {color}   Color name defined in the themes under _color-palette.scss
+ *
+ * @example - @include theme-aware('background', 'color-background');
+ * @returns - background: #FFF;
+ */
+ @mixin theme-aware($key, $color) {
+  @each $theme-name, $theme-color in $themes {
+    @if $theme-name == 'alpha' {
+      #{$key}: map-get(map-get($themes, $theme-name), $color)
+    }  @else {
+      &.theme-#{$theme-name}  {
+        #{$key}: map-get(map-get($themes, $theme-name), $color)
+      }
+    }
+  }
+}
+
+* {
+  box-sizing: border-box;
+  transition-property: background, color;
+  transition-duration: 1s;
+  transition-timing-function: cubic-bezier(.29, 1.01, 1, -0.68);
+}
+
+.App > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  text-align: center;
+  font-family: 'Comfortaa', cursive;
+  font-weight: bold;
+}
+
+
+
+.nav {
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  & .nav-theme {
+    user-select: none;
+    font-weight: bold;
+    border-radius: 12px;
+    padding: 0.2rem 0.5rem;
+    @include theme-aware(color, navitem-font);
+    @include theme-aware(background, navitem-background);
+    &:hover {
+      filter: brightness(1.05);
+    }
+    cursor: pointer;
+  }
+  @include theme-aware(background, nav-background);
+  @include theme-aware(color, nav-font);
+
+}
+
+.middle {
+  height: 80vh;
+  flex-direction: column;
+  @include theme-aware(background, page-background);
+  @include theme-aware(color, page-font);
+  & > p {
+    margin: 5px;
+  }
+}
+
+
+
+.bottom {
+  height: 10vh;
+  @include theme-aware(background, bottom-background);
+  @include theme-aware(color, bottom-font);
+}
+
+
+
+
+@media (max-width: 1000px), screen and (orientation: portrait) { 
+  .nav {
+    min-height: 55px;
+    & .nav-theme {
+      padding: 0.4rem 0.7rem;
+      font-size: 1.5rem;
+    }
+  }
+  .middle {
+    & > p {
+      font-size: 1.3rem;
+    }
+  }
+  .bottom {
+    font-size: 1.3rem;
+  }
+}
