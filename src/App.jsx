@@ -33,7 +33,7 @@ function App() {
     <div className={`App ${switching && 'switching'}`}>
       <div className={`nav`}><span className={`nav-theme`} onClick={e => handleClick(e)}>Switch theme</span></div>
       <div className={'middle'}>
-        <p> You can switch between three themes</p>
+        <p> You can switch between multiple themes</p>
         <p> "{themes[theme].charAt(0).toUpperCase() + themes[theme].slice(1)}" has been applied</p>
       </div>
       <div className={'bottom'}>Bottom section</div>

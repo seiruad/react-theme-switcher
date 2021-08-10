@@ -64,7 +64,7 @@ $themes: (
 
 * {
   box-sizing: border-box;
-  transition-property: color, opacity;
+  transition-property: opacity;
   transition-duration: 0.8s;
   transition-timing-function: ease;
   // old animation function - cubic-bezier(.29, 1.01, 1, -0.68)
