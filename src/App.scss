@@ -2,29 +2,41 @@ $themes: (
   gamma: (
     page-background: #dfcdb5,
     page-font: #231e15,
-    bottom-background: #f5a141,
-    bottom-font: #edf5e1,
+    bottom-background: #dfcdb5, 
+    bottom-font: #231e15,
     nav-background: #e7891a,
     navitem-font: #edf5e1 ,
     navitem-background: #f8a445,
   ),
   beta: (
-    page-background: #696969,
-    page-font: #d1d1b2,
-    bottom-background: #505050,
-    bottom-font: #d1d1b2,
-    nav-background: #242323,
-    navitem-font: #d1d1b2,
-    navitem-background: #535151
+    page-background: #363636,
+    page-font: #fff,
+    bottom-background: #363636,
+    bottom-font: #fff,
+    nav-background: #2e2e2e,
+    navitem-font: #363636,
+    navitem-background: #84c9fb
   ),
   alpha: (
     page-background: #f5f5f5,
-    page-font: #222,
-    bottom-background: #d4d4d4,
-    bottom-font: #222,
-    nav-background: #41b3a3,
-    navitem-font: #c38d9e,
-    navitem-background: #edf5e1,
+    page-font: #656565,
+
+    bottom-background: #f5f5f5,
+    bottom-font: #656565,
+
+    nav-background: linear-gradient( 90deg, #41b3a3, #85dcba 80%),
+
+    navitem-font: #77d6b2,
+    navitem-background: #f4fefb,
+  ),
+  delta: (
+    page-background: #191717,
+    page-font: #d1c9c5,
+    bottom-background: #191717,
+    bottom-font: #5cdb95,
+    nav-background: #191717, //linear-gradient( 90deg, #af3e31, #a33327 50%, #af3e31),
+    navitem-font: #d1c9c5,
+    navitem-background: #a33327
   ),
 );
 
@@ -52,9 +64,14 @@ $themes: (
 
 * {
   box-sizing: border-box;
-  transition-property: background, color;
-  transition-duration: 1s;
-  transition-timing-function: cubic-bezier(.29, 1.01, 1, -0.68);
+  transition-property: color, opacity;
+  transition-duration: 0.8s;
+  transition-timing-function: ease;
+  // old animation function - cubic-bezier(.29, 1.01, 1, -0.68)
+}
+
+.App.switching * {
+  opacity: 0.4;
 }
 
 .App > div {
@@ -87,14 +104,21 @@ body {
     padding: 0.2rem 0.5rem;
     @include theme-aware(color, navitem-font);
     @include theme-aware(background, navitem-background);
-    &:hover {
-      filter: brightness(1.05);
-    }
     cursor: pointer;
+    // transition: all .2s ease-in-out;
+    -webkit-tap-highlight-color: transparent;
+    &:active {
+      transform: scale(0.99);
+    }
   }
   @include theme-aware(background, nav-background);
   @include theme-aware(color, nav-font);
+}
 
+@media (hover: hover) {
+  .nav .nav-theme:hover {
+    filter: brightness(1.05);
+  }
 }
 
 .middle {
@@ -111,6 +135,7 @@ body {
 
 .bottom {
   height: 10vh;
+  font-size: .9rem;
   @include theme-aware(background, bottom-background);
   @include theme-aware(color, bottom-font);
 }
@@ -132,6 +157,7 @@ body {
     }
   }
   .bottom {
-    font-size: 1.3rem;
+    min-height: 40px;
+    font-size: 1rem;
   }
 }

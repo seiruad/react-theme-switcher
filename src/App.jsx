@@ -2,21 +2,27 @@ import React from 'react';
 import { useState } from 'react';
 import './App.scss';
 
-const themes = ['theme-alpha', 'theme-beta', 'theme-gamma']
+const themes = ['theme-alpha',  'theme-delta','theme-gamma', 'theme-beta']
 
 function App() {
   const [theme, setTheme] = useState(0)
+  const [switching, setSwitching] = useState(false)
 
   const switchTheme = () => {
+    setSwitching(true)
     const elements = document.querySelectorAll('.App *') 
     const newTheme = (theme + 1) % themes.length
-    for (const el of elements) {
-      el.classList.remove(themes[theme]);
-      el.classList.add(themes[newTheme]);
-    }
     
-    // since transition-duration in scss set to 1s
-    setTimeout(() => setTheme(newTheme), 1000)
+    // since transition-duration in scss set to 0.8s
+    setTimeout(() => {
+      for (const el of elements) {
+        el.classList.remove(themes[theme]);
+        el.classList.add(themes[newTheme]);
+      }
+      setSwitching(false)
+      setTheme(newTheme)
+    }, 800)
+    
   }
 
   const handleClick = e => {
@@ -24,7 +30,7 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className={`App ${switching && 'switching'}`}>
       <div className={`nav`}><span className={`nav-theme`} onClick={e => handleClick(e)}>Switch theme</span></div>
       <div className={'middle'}>
         <p> You can switch between three themes</p>
